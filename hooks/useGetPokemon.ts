@@ -17,6 +17,7 @@ export default function useGetPokemon() {
         showError: false,
         msg: "",
       });
+      setLoader(true);
       const { data } = await axios
         .get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .finally(() => setLoader(false));

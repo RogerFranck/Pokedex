@@ -1,7 +1,5 @@
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import useGetPokemon from "../hooks/useGetPokemon";
-import Error from "./Error";
-import Loader from "./loader";
 import PokeView from "./PokeView";
 
 export default function Screen() {

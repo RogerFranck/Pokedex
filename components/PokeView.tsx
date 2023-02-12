@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { IPokemon } from "../interfaces/IPokemon";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
-import Initial from "./Initial";
 
 interface Props {
   pokemonData: IPokemon;
@@ -20,10 +19,10 @@ export default function PokeView({
   error,
 }: Props) {
   if (loader) {
-    <LoaderView />;
+    return <LoaderView />;
   }
   if (error.showError) {
-    <ErrorView msg={error.msg} />;
+    return <ErrorView msg={error.msg} />;
   }
   return (
     <View style={styles.center}>
@@ -39,9 +38,9 @@ export default function PokeView({
         </View>
       )}
       <View style={{ flexDirection: "row", marginTop: 10 }}>
-        {type?.map((e, i) => (
+        {type?.map((typeText, i) => (
           <View key={i} style={styles.boxType}>
-            <Text style={{ color: "white" }}>{e}</Text>
+            <Text style={{ color: "white" }}>{typeText}</Text>
           </View>
         ))}
       </View>

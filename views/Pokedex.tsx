@@ -1,15 +1,15 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import BottomDecoration from "../components/BottomDecoration";
 import Display from "../components/Display";
 import TopDecoration from "../components/TopDecoration";
 
 export default function Pokedex() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TopDecoration />
       <Display />
       <BottomDecoration />
-    </View>
+    </SafeAreaView>
   );
 }
 
