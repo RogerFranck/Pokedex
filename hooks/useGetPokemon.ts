@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { IPokemon } from "../interfaces/IPokemon";
+import { pokeAxios } from "../utils/pokeAxios";
 
 export default function useGetPokemon() {
   const [pokemon, setPokemon] = useState("");
@@ -18,12 +18,10 @@ export default function useGetPokemon() {
         msg: "",
       });
       setLoader(true);
-      const { data } = await axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+      const { data } = await pokeAxios
+        .get(`pokemon/${pokemon}`)
         .finally(() => setLoader(false));
-
       const pokeType: string[] = data.types.map((pk: any) => pk.type.name);
-
       const poke: IPokemon = {
         id: data.id,
         name: data.name,
