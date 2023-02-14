@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pokeAxios } from "../utils/pokeAxios";
 
-export default function useGetDescription() {
-  const [description, setdescription] = useState({});
+export default function useGetDescription(id: number | string) {
+  const [description, setDescription] = useState("");
   const [loader, setLoader] = useState<boolean>(true);
   const [error, setError] = useState({
     showError: false,
     msg: "",
   });
 
-  const getDescription = async (id: number | string) => {
+  const getDescription = async () => {
     try {
       setError({
         showError: false,
@@ -21,8 +21,8 @@ export default function useGetDescription() {
         .finally(() => setLoader(false));
       //! AQUI vas a editar data para tener la info que necesitamos
       //! Le creas una interfaz y para renderizar sera en un modal
-      console.log(data)
-      // setdescription(description);
+      console.log(data.flavor_text_entries[26].flavor_text)
+      setDescription(data.flavor_text_entries[26].flavor_text);
     } catch (error) {
       setError({
         showError: true,
@@ -30,11 +30,13 @@ export default function useGetDescription() {
       });
     }
   };
-
+  useEffect(() => {
+    getDescription()
+  }, [id])
+  
   return {
     description,
     loader,
     error,
-    getDescription,
   };
 }

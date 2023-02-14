@@ -1,13 +1,15 @@
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import useGetDescription from '../hooks/useGetDescription';
 
 interface Props {
     open: boolean,
     handleClose: any,
     title: string,
-    description: string,
+    id: number | string,
 }
 
-const ModalGeneral = ({ open, handleClose, title, description } : Props) => {
+const ModalGeneral = ({ open, handleClose, title, id } : Props) => {
+  const { description, loader, error } = useGetDescription(id)
   return (
     <View style={styles.centeredView}>
       <Modal

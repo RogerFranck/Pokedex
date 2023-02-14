@@ -6,6 +6,7 @@ import BtnDescription from "./BtnGeneral";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
 import ModalGeneral from "./ModalGeneral";
+import useGetDescription from "../hooks/useGetDescription";
 
 interface Props {
   pokemonData: IPokemon;
@@ -30,7 +31,7 @@ export default function PokeView({
   }
   return (
     <View style={styles.center}>
-      <ModalGeneral description="hola" handleClose={handleClose} open={open} title="njvhzfhhbh"/>
+      <ModalGeneral id={id} handleClose={handleClose} open={open} title="Description"/>
       <Image
         style={styles.pokeimg}
         source={{
@@ -50,9 +51,9 @@ export default function PokeView({
         ))}
       </View>
       <View style={styles.btnRow}>
-       <BtnDescription handlePress={() => handleOpen("description", id)}>Description</BtnDescription>
-       <BtnDescription handlePress={() => handleOpen("evolution", id)}>Evolution</BtnDescription>
-       <BtnDescription handlePress={() => handleOpen("Moves", id)}>Moves</BtnDescription>
+       <BtnDescription handlePress={() => handleOpen()}>Description</BtnDescription>
+       <BtnDescription handlePress={() => handleOpen()}>Evolution</BtnDescription>
+       <BtnDescription handlePress={() => handleOpen()}>Moves</BtnDescription>
       </View>
     </View>
   );
