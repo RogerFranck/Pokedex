@@ -19,7 +19,7 @@ export default function useGetPokemon() {
       });
       setLoader(true);
       const { data } = await pokeAxios
-        .get(`pokemon/${pokemon}`)
+        .get(`pokemon/${pokemon.toLocaleLowerCase()}`)
         .finally(() => setLoader(false));
       const pokeType: string[] = data.types.map((pk: any) => pk.type.name);
       const poke: IPokemon = {
