@@ -1,5 +1,5 @@
 export interface IPokemon {
-  id?: number;
+  id: number | string;
   name?: string;
   image?: string;
   type?: string[];

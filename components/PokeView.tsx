@@ -1,8 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import useModal from "../hooks/useModal";
 import { IPokemon } from "../interfaces/IPokemon";
+import BtnDescription from "./BtnGeneral";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
+import ModalGeneral from "./ModalGeneral";
 
 interface Props {
   pokemonData: IPokemon;
@@ -14,10 +17,11 @@ interface Props {
 }
 
 export default function PokeView({
-  pokemonData: { name, type, image },
+  pokemonData: { name, type, image, id },
   loader,
   error,
 }: Props) {
+  const { open, handleClose, handleOpen } = useModal()
   if (loader) {
     return <LoaderView />;
   }
@@ -26,6 +30,7 @@ export default function PokeView({
   }
   return (
     <View style={styles.center}>
+      <ModalGeneral description="hola" handleClose={handleClose} open={open} title="njvhzfhhbh"/>
       <Image
         style={styles.pokeimg}
         source={{
@@ -43,6 +48,11 @@ export default function PokeView({
             <Text style={{ color: "white" }}>{typeText}</Text>
           </View>
         ))}
+      </View>
+      <View style={styles.btnRow}>
+       <BtnDescription handlePress={() => handleOpen("description", id)}>Description</BtnDescription>
+       <BtnDescription handlePress={() => handleOpen("evolution", id)}>Evolution</BtnDescription>
+       <BtnDescription handlePress={() => handleOpen("Moves", id)}>Moves</BtnDescription>
       </View>
     </View>
   );
@@ -68,4 +78,9 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
   },
+  btnRow: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+  }
 });

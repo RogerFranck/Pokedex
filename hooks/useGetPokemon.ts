@@ -9,7 +9,7 @@ export default function useGetPokemon() {
     showError: false,
     msg: "",
   });
-  const [pokemonData, setPokemonData] = useState<IPokemon>({});
+  const [pokemonData, setPokemonData] = useState<IPokemon>({id: 0});
 
   const getPokemon = async () => {
     try {
