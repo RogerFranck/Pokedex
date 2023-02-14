@@ -5,7 +5,7 @@ import { IPokemon } from "../interfaces/IPokemon";
 import BtnDescription from "./BtnGeneral";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
-import ModalGeneral from "./ModalGeneral";
+import ModalDescription from "./ModalDescription";
 import useGetDescription from "../hooks/useGetDescription";
 
 interface Props {
@@ -22,7 +22,9 @@ export default function PokeView({
   loader,
   error,
 }: Props) {
-  const { open, handleClose, handleOpen } = useModal()
+  const { open: openDescription, handleClose: handleCloseDescription, handleOpen: handleOpenDescription } = useModal()
+  const { open:openEvolution, handleClose:handleCloseEvolution, handleOpen:handleOpenEvolution } = useModal()
+  const { open:openMoves, handleClose:handleCloseMoves, handleOpen:handleOpenMoves } = useModal()
   if (loader) {
     return <LoaderView />;
   }
@@ -31,7 +33,9 @@ export default function PokeView({
   }
   return (
     <View style={styles.center}>
-      <ModalGeneral id={id} handleClose={handleClose} open={open} title="Description"/>
+      <ModalDescription id={id} handleClose={handleCloseDescription} open={openDescription} title="Description"/>
+      <ModalDescription id={id} handleClose={handleCloseEvolution} open={openEvolution} title="Evolution"/>
+      <ModalDescription id={id} handleClose={handleCloseMoves} open={openMoves} title="Moves"/>
       <Image
         style={styles.pokeimg}
         source={{
@@ -51,9 +55,9 @@ export default function PokeView({
         ))}
       </View>
       <View style={styles.btnRow}>
-       <BtnDescription handlePress={() => handleOpen()}>Description</BtnDescription>
-       <BtnDescription handlePress={() => handleOpen()}>Evolution</BtnDescription>
-       <BtnDescription handlePress={() => handleOpen()}>Moves</BtnDescription>
+       <BtnDescription handlePress={() => handleOpenDescription()}>Description</BtnDescription>
+       <BtnDescription handlePress={() => handleOpenEvolution()}>Evolution</BtnDescription>
+       <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
       </View>
     </View>
   );

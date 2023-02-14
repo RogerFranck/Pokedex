@@ -8,7 +8,7 @@ interface Props {
     id: number | string,
 }
 
-const ModalGeneral = ({ open, handleClose, title, id } : Props) => {
+const ModalDescription = ({ open, handleClose, title, id } : Props) => {
   const { description, loader, error } = useGetDescription(id)
   return (
     <View style={styles.centeredView}>
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalGeneral;
+export default ModalDescription;
