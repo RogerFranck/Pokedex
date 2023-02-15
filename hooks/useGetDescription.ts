@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { pokeAxios } from "../utils/pokeAxios";
 
+interface Idescription {
+  data: {
+    flavor_text_entries: [{
+      flavor_text: string,
+      language: {
+        name: string
+      }
+    }]
+  }
+}
+
 export default function useGetDescription(id: number | string) {
   const [description, setDescription] = useState("");
   const [loader, setLoader] = useState<boolean>(true);
@@ -16,12 +27,13 @@ export default function useGetDescription(id: number | string) {
         msg: "",
       });
       setLoader(true);
-      const { data } = await pokeAxios
+      const { data } : Idescription = await pokeAxios
         .get(`pokemon-species/${id}`)
         .finally(() => setLoader(false));
       //! AQUI vas a editar data para tener la info que necesitamos
       //! Le creas una interfaz y para renderizar sera en un modal
-      setDescription(data.flavor_text_entries[26].flavor_text);
+      let indexOfDescription = data?.flavor_text_entries?.findIndex(({ language }) => language.name == "es")
+      setDescription(data.flavor_text_entries[indexOfDescription].flavor_text);
     } catch (error) {
       setError({
         showError: true,
