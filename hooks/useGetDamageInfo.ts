@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { pokeAxios } from "../utils/pokeAxios";
+import { IDamageInfo } from "../interfaces/IDamageInfo";
 
 export default function useGetDamageInfo(id: number | string) {
-  const [damageInfo, setDamageInfo] = useState("");
+  const defaultDamageInfo = {
+    "double_damage_from":[],
+    "double_damage_to":[],
+    "half_damage_from":[],
+    "half_damage_to":[],
+    "no_damage_from":[],
+    "no_damage_to":[],
+  }
+  
+  const [damageInfo, setDamageInfo] = useState<IDamageInfo>(defaultDamageInfo);
   const [loader, setLoader] = useState<boolean>(true);
   const [error, setError] = useState({
     showError: false,
@@ -21,7 +31,6 @@ export default function useGetDamageInfo(id: number | string) {
         .finally(() => setLoader(false));
       //! AQUI vas a editar data para tener la info que necesitamos
       //! Le creas una interfaz y para renderizar sera en un modal
-      console.log(data.damage_relations)
       setDamageInfo(data.damage_relations);
     } catch (error) {
       setError({

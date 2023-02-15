@@ -6,7 +6,7 @@ import BtnDescription from "./BtnGeneral";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
 import ModalDescription from "./ModalDescription";
-import useGetDescription from "../hooks/useGetDescription";
+import ModalType from "./ModalType";
 
 interface Props {
   pokemonData: IPokemon;
@@ -25,6 +25,7 @@ export default function PokeView({
   const { open: openDescription, handleClose: handleCloseDescription, handleOpen: handleOpenDescription } = useModal()
   const { open:openEvolution, handleClose:handleCloseEvolution, handleOpen:handleOpenEvolution } = useModal()
   const { open:openMoves, handleClose:handleCloseMoves, handleOpen:handleOpenMoves } = useModal()
+  const { open:openTypes, handleClose:handleCloseTypes, handleOpen:handleOpenTypes } = useModal()
   if (loader) {
     return <LoaderView />;
   }
@@ -35,7 +36,7 @@ export default function PokeView({
     <View style={styles.center}>
       <ModalDescription id={id} handleClose={handleCloseDescription} open={openDescription} title="Description"/>
       <ModalDescription id={id} handleClose={handleCloseEvolution} open={openEvolution} title="Evolution"/>
-      <ModalDescription id={id} handleClose={handleCloseMoves} open={openMoves} title="Moves"/>
+      <ModalType id={id} handleClose={handleCloseTypes} open={openTypes} title="Types"/>
       <Image
         style={styles.pokeimg}
         source={{
@@ -58,6 +59,7 @@ export default function PokeView({
        <BtnDescription handlePress={() => handleOpenDescription()}>Description</BtnDescription>
        <BtnDescription handlePress={() => handleOpenEvolution()}>Evolution</BtnDescription>
        <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
+       <BtnDescription handlePress={() => handleOpenTypes()}>Type</BtnDescription>
       </View>
     </View>
   );

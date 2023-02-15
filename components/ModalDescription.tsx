@@ -1,5 +1,6 @@
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import useGetDescription from '../hooks/useGetDescription';
+import * as Speech from 'expo-speech';
 
 interface Props {
     open: boolean,
@@ -8,8 +9,19 @@ interface Props {
     id: number | string,
 }
 
+const speakDescription = (thingToSay: string, open: boolean) => {
+  if (open) {
+    Speech.speak(thingToSay, {
+      language: 'es-MX',
+      pitch: 0.4,
+      rate: 1.1
+    });
+  }
+};
+
 const ModalDescription = ({ open, handleClose, title, id } : Props) => {
   const { description, loader, error } = useGetDescription(id)
+  speakDescription(description, open)
   return (
     <View style={styles.centeredView}>
       <Modal

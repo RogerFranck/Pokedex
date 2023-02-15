@@ -21,7 +21,6 @@ export default function useGetDescription(id: number | string) {
         .finally(() => setLoader(false));
       //! AQUI vas a editar data para tener la info que necesitamos
       //! Le creas una interfaz y para renderizar sera en un modal
-      console.log(data.flavor_text_entries[26].flavor_text)
       setDescription(data.flavor_text_entries[26].flavor_text);
     } catch (error) {
       setError({

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IPokemon } from "../interfaces/IPokemon";
 import { pokeAxios } from "../utils/pokeAxios";
+import * as Speech from 'expo-speech';
 
 export default function useGetPokemon() {
   const [pokemon, setPokemon] = useState("");
@@ -10,6 +11,14 @@ export default function useGetPokemon() {
     msg: "",
   });
   const [pokemonData, setPokemonData] = useState<IPokemon>({id: 0});
+
+  const speakName = (thingToSay: string) => {
+    Speech.speak(thingToSay, {
+      language: 'en-US',
+      pitch: 0.4,
+      rate: 1.1
+    });
+  };
 
   const getPokemon = async () => {
     try {
@@ -28,8 +37,10 @@ export default function useGetPokemon() {
         image: data.sprites.front_default,
         type: pokeType,
       };
+      speakName(poke.name || 'Not Found')
       setPokemonData(poke);
     } catch (error) {
+      speakName('Not Found')
       setError({
         showError: true,
         msg: "Pokemon no encontrado",
@@ -43,6 +54,6 @@ export default function useGetPokemon() {
     loader,
     error,
     pokemonData,
-    getPokemon,
+    getPokemon
   };
 }
