@@ -6,6 +6,7 @@ import BtnDescription from "./BtnGeneral";
 import ErrorView from "./Error";
 import LoaderView from "./Loader";
 import ModalDescription from "./ModalDescription";
+import ModalMoves from "./ModalMoves";
 import ModalType from "./ModalType";
 
 interface Props {
@@ -18,14 +19,14 @@ interface Props {
 }
 
 export default function PokeView({
-  pokemonData: { name, type, image, id },
+  pokemonData: { name, type, image, id, moves },
   loader,
   error,
 }: Props) {
   const { open: openDescription, handleClose: handleCloseDescription, handleOpen: handleOpenDescription } = useModal()
-  const { open:openEvolution, handleClose:handleCloseEvolution, handleOpen:handleOpenEvolution } = useModal()
-  const { open:openMoves, handleClose:handleCloseMoves, handleOpen:handleOpenMoves } = useModal()
-  const { open:openTypes, handleClose:handleCloseTypes, handleOpen:handleOpenTypes } = useModal()
+  const { open: openEvolution, handleClose: handleCloseEvolution, handleOpen: handleOpenEvolution } = useModal()
+  const { open: openMoves, handleClose: handleCloseMoves, handleOpen: handleOpenMoves } = useModal()
+  const { open: openTypes, handleClose: handleCloseTypes, handleOpen: handleOpenTypes } = useModal()
   if (loader) {
     return <LoaderView />;
   }
@@ -34,9 +35,8 @@ export default function PokeView({
   }
   return (
     <View style={styles.center}>
-      <ModalDescription id={id} handleClose={handleCloseDescription} open={openDescription} title="Description"/>
-      <ModalDescription id={id} handleClose={handleCloseEvolution} open={openEvolution} title="Evolution"/>
-      <ModalType id={id} handleClose={handleCloseTypes} open={openTypes} title="Types"/>
+      <ModalDescription id={id} handleClose={handleCloseDescription} open={openDescription} title="Description" />
+      <ModalDescription id={id} handleClose={handleCloseEvolution} open={openEvolution} title="Evolution" />
       <Image
         style={styles.pokeimg}
         source={{
@@ -56,11 +56,16 @@ export default function PokeView({
         ))}
       </View>
       <View style={styles.btnRow}>
-       <BtnDescription handlePress={() => handleOpenDescription()}>Description</BtnDescription>
-       <BtnDescription handlePress={() => handleOpenEvolution()}>Evolution</BtnDescription>
-       <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
-       <BtnDescription handlePress={() => handleOpenTypes()}>Type</BtnDescription>
+        <BtnDescription handlePress={() => handleOpenDescription()}>Description</BtnDescription>
+        <BtnDescription handlePress={() => handleOpenEvolution()}>Evolution</BtnDescription>
+        <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
+        <BtnDescription handlePress={() => handleOpenTypes()}>Type</BtnDescription>
       </View>
+      <ModalType id={id} handleClose={handleCloseTypes} open={openTypes} title="Types" />
+      {
+        moves &&
+        <ModalMoves handleClose={handleCloseMoves} open={openMoves} title="Moves" moves={moves} />
+      }
     </View>
   );
 }

@@ -36,6 +36,7 @@ export default function useGetPokemon() {
         name: data.name,
         image: data.sprites.front_default,
         type: pokeType,
+        moves: data.moves.map((e: any) => e.move.name).sort()
       };
       speakName(poke.name || 'Not Found')
       setPokemonData(poke);

@@ -3,4 +3,5 @@ export interface IPokemon {
   name?: string;
   image?: string;
   type?: string[];
+  moves?: Array<string>
 }

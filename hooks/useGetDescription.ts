@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import { pokeAxios } from "../utils/pokeAxios";
-
-interface Idescription {
-  data: {
-    flavor_text_entries: [{
-      flavor_text: string,
-      language: {
-        name: string
-      }
-    }]
-  }
-}
+import { Idescription } from "../interfaces/IDescription";
 
 export default function useGetDescription(id: number | string) {
   const [description, setDescription] = useState("");

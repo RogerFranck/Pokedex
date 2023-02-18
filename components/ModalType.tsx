@@ -113,14 +113,14 @@ const ModalType = ({ open, handleClose, title, id }: Props) => {
                     }
 
                   </View>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={handleClose}>
-                    <Text style={styles.textStyle}>Cerrar</Text>
-                  </Pressable>
                 </>)
               }
             </ScrollView>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={handleClose}>
+              <Text style={styles.textStyle}>Cerrar</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
