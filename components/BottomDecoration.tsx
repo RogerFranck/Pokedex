@@ -1,6 +1,8 @@
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import usePlayDitto from "../hooks/usePlayDitto";
 
 export default function BottomDecoration() {
+  const { dittoView, handleDitto } = usePlayDitto();
   return (
     <View style={styles.container}>
       <View style={styles.mayorCircle} />
@@ -9,7 +11,16 @@ export default function BottomDecoration() {
           <View style={styles.redPoint} />
           <View style={styles.bluePoint} />
         </View>
-        <View style={styles.greenBox} />
+        <TouchableOpacity onPress={handleDitto}>
+          <View style={styles.greenBox}>
+            {dittoView && (
+              <Image
+                style={styles.ditto}
+                source={require("../assets/ditto/ditto.gif")}
+              />
+            )}
+          </View>
+        </TouchableOpacity>
       </View>
       <View>
         <View style={styles.crossUp} />
@@ -77,5 +88,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: -35,
     top: 35,
+  },
+  ditto: {
+    width: 60,
+    height: 60,
+    alignSelf: "center",
   },
 });
