@@ -24,7 +24,6 @@ export default function PokeView({
   error,
 }: Props) {
   const { open: openDescription, handleClose: handleCloseDescription, handleOpen: handleOpenDescription } = useModal()
-  const { open: openEvolution, handleClose: handleCloseEvolution, handleOpen: handleOpenEvolution } = useModal()
   const { open: openMoves, handleClose: handleCloseMoves, handleOpen: handleOpenMoves } = useModal()
   const { open: openTypes, handleClose: handleCloseTypes, handleOpen: handleOpenTypes } = useModal()
   if (loader) {
@@ -36,7 +35,6 @@ export default function PokeView({
   return (
     <View style={styles.center}>
       <ModalDescription id={id} handleClose={handleCloseDescription} open={openDescription} title="Description" />
-      <ModalDescription id={id} handleClose={handleCloseEvolution} open={openEvolution} title="Evolution" />
       <Image
         style={styles.pokeimg}
         source={{
@@ -57,7 +55,6 @@ export default function PokeView({
       </View>
       <View style={styles.btnRow}>
         <BtnDescription handlePress={() => handleOpenDescription()}>Description</BtnDescription>
-        <BtnDescription handlePress={() => handleOpenEvolution()}>Evolution</BtnDescription>
         <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
         <BtnDescription handlePress={() => handleOpenTypes()}>Type</BtnDescription>
       </View>

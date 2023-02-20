@@ -1,12 +1,12 @@
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import { Image, Modal, StyleSheet, Text, Pressable, View, ScrollView } from 'react-native';
 import useGetDescription from '../hooks/useGetDescription';
 import * as Speech from 'expo-speech';
 
 interface Props {
-    open: boolean,
-    handleClose: any,
-    title: string,
-    id: number | string,
+  open: boolean,
+  handleClose: any,
+  title: string,
+  id: number | string,
 }
 
 const speakDescription = (thingToSay: string, open: boolean) => {
@@ -19,8 +19,9 @@ const speakDescription = (thingToSay: string, open: boolean) => {
   }
 };
 
-const ModalDescription = ({ open, handleClose, title, id } : Props) => {
-  const { description, loader, error } = useGetDescription(id)
+const ModalDescription = ({ open, handleClose, title, id }: Props) => {
+  const { description, evolution, loader, error } = useGetDescription(id);
+  console.log('Evo', evolution)
   speakDescription(description, open)
   return (
     <View style={styles.centeredView}>
@@ -28,14 +29,35 @@ const ModalDescription = ({ open, handleClose, title, id } : Props) => {
         animationType="slide"
         transparent={true}
         visible={open}
-        onRequestClose={ handleClose }>
+        onRequestClose={handleClose}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{title}</Text>
-            <Text>{description}</Text>
+            <ScrollView>
+              <Text style={styles.modalText}>{title}</Text>
+              <Text>{description}</Text>
+
+              <Text style={styles.evolutionTitle}>Evolution:</Text>
+              {
+                evolution?.map(({ order, name, url }, ix) => (
+                  <>
+                    <View style={styles.evolutionNode} key={ix}>
+                      <Text>Evolución: {order} </Text>
+                      <Text>- {name}</Text>
+                    </View>
+                    <Image
+                      style={styles.typeIcon}
+                      source={{
+                        uri: url,
+                      }}
+                      key={`no_damage_to_${ix}`}
+                    />
+                  </>
+                ))
+              }
+            </ScrollView>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={ handleClose }>
+              onPress={handleClose}>
               <Text style={styles.textStyle}>Cerrar</Text>
             </Pressable>
           </View>
@@ -54,6 +76,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
+    marginTop: 60,
+    marginBottom: 60,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 50,
@@ -88,6 +112,22 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  evolutionTitle: {
+    marginBottom: 15,
+    marginTop: 20,
+    fontWeight: 'bold'
+  },
+  evolutionNode: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  typeIcon: {
+    width: 56,
+    height: 70,
+    margin: 5,
+    alignSelf: 'center'
   },
 });
 
