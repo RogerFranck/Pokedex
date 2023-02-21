@@ -49,7 +49,7 @@ export default function PokeView({
       <View style={{ flexDirection: "row", marginTop: 10 }}>
         {type?.map((typeText, i) => (
           <View key={i} style={styles.boxType}>
-            <Text style={{ color: "white" }}>{typeText}</Text>
+            <Text style={{ color: "white" }}>{typeText.name}</Text>
           </View>
         ))}
       </View>
@@ -58,7 +58,7 @@ export default function PokeView({
         <BtnDescription handlePress={() => handleOpenMoves()}>Moves</BtnDescription>
         <BtnDescription handlePress={() => handleOpenTypes()}>Type</BtnDescription>
       </View>
-      <ModalType id={id} handleClose={handleCloseTypes} open={openTypes} title="Types" />
+      <ModalType types={type} handleClose={handleCloseTypes} open={openTypes} title="Types" />
       {
         moves &&
         <ModalMoves handleClose={handleCloseMoves} open={openMoves} title="Moves" moves={moves} />

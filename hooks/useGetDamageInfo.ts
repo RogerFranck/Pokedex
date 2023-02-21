@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
-import { pokeAxios } from "../utils/pokeAxios";
-import { IDamageInfo } from "../interfaces/IDamageInfo";
+import { IDamageInfo, IDamageInfoName } from "../interfaces/IDamageInfo";
+import { IPokemonType } from "../interfaces/IPokemon";
+import axios from "axios";
 
-export default function useGetDamageInfo(id: number | string) {
-  const defaultDamageInfo = {
-    "double_damage_from":[],
-    "double_damage_to":[],
-    "half_damage_from":[],
-    "half_damage_to":[],
-    "no_damage_from":[],
-    "no_damage_to":[],
-  }
-  
-  const [damageInfo, setDamageInfo] = useState<IDamageInfo>(defaultDamageInfo);
+export default function useGetDamageInfo(types?: IPokemonType[]) {
+  const [damageInfo, setDamageInfo] = useState<IDamageInfo[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
   const [error, setError] = useState({
     showError: false,
     msg: "",
   });
 
-  const getDamageInfo = async () => {
+  const getDamageInfo = async (types?: IPokemonType[]) => {
     try {
-      setError({
-        showError: false,
-        msg: "",
-      });
-      setLoader(true);
-      const { data } = await pokeAxios
-        .get(`type/${id}`)
-        .finally(() => setLoader(false));
-      //! AQUI vas a editar data para tener la info que necesitamos
-      //! Le creas una interfaz y para renderizar sera en un modal
-      setDamageInfo(data.damage_relations);
+      const promesas = await Promise.all(((types || []).map(async ({ name, url }) => {
+        const { data: { damage_relations: {
+          double_damage_from,
+          double_damage_to,
+          half_damage_from,
+          half_damage_to,
+          no_damage_from,
+          no_damage_to
+        } } } = await axios.get(url)
+        return {
+          name,
+          double_damage_from: double_damage_from,
+          double_damage_to: double_damage_to,
+          half_damage_from: half_damage_from,
+          half_damage_to: half_damage_to,
+          no_damage_from: no_damage_from,
+          no_damage_to: no_damage_to
+        };
+      })))
+      setDamageInfo(promesas)
     } catch (error) {
       setError({
         showError: true,
@@ -40,9 +41,9 @@ export default function useGetDamageInfo(id: number | string) {
     }
   };
   useEffect(() => {
-    getDamageInfo()
-  }, [id])
-  
+    getDamageInfo(types)
+  }, [types])
+
   return {
     damageInfo,
     loader,

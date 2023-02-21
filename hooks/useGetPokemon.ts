@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IPokemon } from "../interfaces/IPokemon";
+import { IPokemon, IPokemonType } from "../interfaces/IPokemon";
 import { pokeAxios } from "../utils/pokeAxios";
 import * as Speech from 'expo-speech';
 
@@ -10,7 +10,7 @@ export default function useGetPokemon() {
     showError: false,
     msg: "",
   });
-  const [pokemonData, setPokemonData] = useState<IPokemon>({id: 0});
+  const [pokemonData, setPokemonData] = useState<IPokemon>({ id: 0 });
 
   const speakName = (thingToSay: string) => {
     Speech.speak(thingToSay, {
@@ -30,7 +30,7 @@ export default function useGetPokemon() {
       const { data } = await pokeAxios
         .get(`pokemon/${pokemon.toLocaleLowerCase()}`)
         .finally(() => setLoader(false));
-      const pokeType: string[] = data.types.map((pk: any) => pk.type.name);
+      const pokeType: IPokemonType[] = data.types.map((pk: any) => ({ name: pk.type.name, url: pk.type.url }));
       const poke: IPokemon = {
         id: data.id,
         name: data.name,

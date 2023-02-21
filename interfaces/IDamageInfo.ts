@@ -1,8 +1,9 @@
-interface IDamageInfoName {
+export interface IDamageInfoName {
     name: string
 }
 
 export interface IDamageInfo {
+    name: string,
     double_damage_from:Array<IDamageInfoName>,
     double_damage_to:Array<IDamageInfoName>,
     half_damage_from:Array<IDamageInfoName>,
